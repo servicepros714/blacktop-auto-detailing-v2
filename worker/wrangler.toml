@@ -1,0 +1,13 @@
+# Reference only — the Worker is deployed by pasting index.js in the Cloudflare dashboard.
+name = "blacktop-auto-detailing-worker"
+main = "index.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "REPLACE_WITH_YOUR_D1_NAME"
+database_id = "REPLACE_WITH_YOUR_D1_ID"
+
+# Secrets (dashboard -> Worker -> Settings -> Variables and Secrets):
+#   STRIPE_SECRET_KEY   (required)
+#   ADMIN_TOKEN         (optional, protects GET/PATCH /bookings)
