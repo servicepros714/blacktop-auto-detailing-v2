@@ -11,7 +11,10 @@
 export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://blacktopautodetailing.site').replace(/\/$/, '')
 
 // Google Business Profile, used in the schema (sameAs). Leave '' until known.
-export const GOOGLE_PROFILE_URL = ''
+export const GOOGLE_PROFILE_URL = 'https://www.google.com/search?kgmid=/g/11yy_xz7vn&q=Blacktop+Auto+Detailing'
+
+// Shown above the reviews (not in the schema). Update together with the profile.
+export const GOOGLE_RATING = { value: '4.9', count: 14, asOf: 'Nov 2026' }
 
 export const BUSINESS = {
   name: 'Blacktop Auto Detailing',
@@ -100,7 +103,19 @@ export const BOOKING_WINDOW_DAYS = 90
 // Real Google reviews only, as { name: 'First L.', text: '...' } (first name + last initial,
 // typos fixed; leave out reviews that read like a shop visit). The section and its menu
 // link stay hidden while this is empty.
-export const REVIEWS = []
+// From the Google profile, Nov 2026. Left out: rating-only and emoji-only reviews, the handle
+// "Moxic", and two that describe visiting a shop (Mitch B. "the service there", Molly M.
+// "would come here again"). Paul I.'s review is cut where Google truncates it.
+export const REVIEWS = [
+  { name: 'Paul I.', text: 'Had a great experience with Blacktop Detailing. They did an excellent job on both the exterior and interior. The car looks clean, shiny, and well taken care of, and the red leather interior came out looking fantastic.' },
+  { name: 'Dennis G.', text: 'Blacktop Auto Detailing gave my car the refresh it seriously needed. What stood out to me was how clean everything felt afterward, not just the obvious areas, but all the small details too. The finish looked sharp, the interior felt fresh, and the whole car was noticeably better. Really pleased with how it turned out!' },
+  { name: 'Josiah I.', text: 'Great work as always. This time I accidentally dropped a bunch of juice and they were able to remove it.' },
+  { name: 'Thomas S.', text: 'Car is cleaner than when I got it, and I appreciated how fast the service was.' },
+  { name: 'Aspen M.', text: 'Great detailing job, your car will look brand new. Highly recommend.' },
+  { name: 'Danny B.', text: 'Amazing service, super quick and easy. Will definitely be returning.' },
+  { name: 'Matthew S.', text: 'My car looks and smells great. Happy with the service.' },
+  { name: 'Gloria S.', text: 'Very happy with the detailing. Will recommend the company to others!' },
+]
 
 // Home page FAQ. Shown on the page and used for the FAQPage schema, so keep both in sync.
 export const FAQ = [

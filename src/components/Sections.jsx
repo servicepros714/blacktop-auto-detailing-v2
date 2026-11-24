@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Check, MapPin, Phone, ChevronDown } from 'lucide-react'
-import { BUSINESS, SERVICES, FAQ, REVIEWS } from '../config/business'
+import { BUSINESS, SERVICES, FAQ, REVIEWS, GOOGLE_RATING, GOOGLE_PROFILE_URL } from '../config/business'
 import { SERVICE_PAGES, CITY_PAGES, HOME_CITY } from '../lib/pages'
 
 // Sections shared by the home page and the SEO landing pages.
@@ -133,6 +133,15 @@ export function Reviews() {
       <div className="wrap">
         <div className="sec-head sec-head-dark">
           <h2>What customers say</h2>
+          {GOOGLE_RATING && (
+            <p>
+              Rated {GOOGLE_RATING.value} out of 5 from {GOOGLE_RATING.count} reviews on{' '}
+              <a href={GOOGLE_PROFILE_URL} target="_blank" rel="noopener noreferrer">
+                Google
+              </a>
+              .
+            </p>
+          )}
         </div>
         <div className="rev-grid">
           {REVIEWS.map((r) => (
