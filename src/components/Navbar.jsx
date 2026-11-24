@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone } from 'lucide-react'
-import { BUSINESS } from '../config/business'
+import { BUSINESS, REVIEWS } from '../config/business'
 
 const LINKS = [
   { to: '/#services', label: 'Services' },
   { to: '/#work', label: 'Our work' },
   { to: '/#how-it-works', label: 'How it works' },
   { to: '/#area', label: 'Service area' },
+  ...(REVIEWS.length ? [{ to: '/#reviews', label: 'Reviews' }] : []),
   { to: '/#faq', label: 'FAQ' },
 ]
 

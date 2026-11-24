@@ -45,7 +45,11 @@ export default function Book() {
   const draftSlotOk = draft?.date && draft?.time && !isSlotPast(draft.date, draft.time, now)
 
   const [step, setStep] = useState(location.state?.step || 1)
-  const [services, setServices] = useState(draft?.services || [])
+  // Landing pages link to /book?package=basic|premium to preselect a detail.
+  const pkg = new URLSearchParams(location.search).get('package')
+  const [services, setServices] = useState(
+    pkg === 'basic' || pkg === 'premium' ? [pkg] : draft?.services || [],
+  )
   const [addon, setAddon] = useState(false) // step 1 second screen: optional exterior wash
   const [date, setDate] = useState(draftSlotOk ? draft.date : null)
   const [time, setTime] = useState(draftSlotOk ? draft.time : null)
@@ -104,7 +108,6 @@ export default function Book() {
   const dayFull = (iso) => SLOTS.every((s) => slotState(iso, s) !== 'open')
 
   const total = subtotalFor(services)
-  const exteriorOnly = services.length === 1 && services[0] === 'exterior'
   const detailName = services.includes('premium') ? 'Premium Detail' : 'Basic Detail'
   const exteriorService = SERVICES.find((s) => s.addon)
 
@@ -114,7 +117,7 @@ export default function Book() {
       window.scrollTo(0, 0)
       return
     }
-    if (step === 2) setAddon(!exteriorOnly) // return to the add-on screen unless exterior-only
+    if (step === 2) setAddon(true) // return to the add-on screen
     go(step - 1)
   }
 
@@ -167,7 +170,6 @@ export default function Book() {
 
   function next() {
     if (step === 1) {
-      if (exteriorOnly) return go(2)
       if (!addon) {
         if (!services.some((id) => id === 'basic' || id === 'premium')) {
           toast.error('Choose a Basic or Premium detail to continue.')

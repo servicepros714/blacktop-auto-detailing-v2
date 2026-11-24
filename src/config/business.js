@@ -1,36 +1,43 @@
 // Everything business-specific lives here. Edit this file, not the components.
+//
+// Confirmed facts (owner, Nov 2026): mobile only, we bring our own water and power,
+// every day with start times 8 AM - 5 PM, Basic Detail usually 2-3 hours and Premium
+// Detail 4-6 hours, satisfaction guarantee, same price for every vehicle size, prepay
+// online with code PREPAY for $15 off. Same prices and hours in the nearby cities.
+// NOT confirmed, so never claimed: ratings, insurance, years in business, customer counts,
+// product brands, ceramic coating or paint correction (not offered).
+
+// Canonical domain (no www; www redirects to it).
+export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://blacktopautodetailing.site').replace(/\/$/, '')
+
+// Google Business Profile, used in the schema (sameAs). Leave '' until known.
+export const GOOGLE_PROFILE_URL = ''
 
 export const BUSINESS = {
   name: 'Blacktop Auto Detailing',
   shortName: 'Blacktop',
   phone: '(714) 559-3882',
   phoneHref: 'tel:+17145593882',
+  phoneSchema: '+1-714-559-3882',
   city: 'Buena Park',
   state: 'CA',
-  hours: 'Mon–Sun, by appointment',
-  // Must be unique across the portfolio (scopes every D1 query + booking IDs)
-  source: 'blacktop',
+  hours: 'Every day, 8 AM – 5 PM',
+  // Must match SOURCE in worker/worker.js (scopes every D1 query)
+  source: 'blacktop-buena-park',
   bookingPrefix: 'BLK-',
   mapQuery: 'Buena Park, CA',
 }
 
-// Cities shown in the service-area section. Confirm real coverage with the owner.
-export const SERVICE_AREA = [
-  'Buena Park',
-  'Fullerton',
-  'Anaheim',
-  'La Palma',
-  'Cypress',
-  'La Mirada',
-  'Stanton',
-  'Garden Grove',
-]
+// Neighborhoods named on the home page (Buena Park). Nearby cities with their own pages
+// are listed in src/lib/pages.js (CITY_PAGES); the owner confirmed those cities.
+export const HOME_AREAS = ['the Knott’s Berry Farm area', 'Buena Park Downtown', 'Beach Boulevard', 'Ralph B. Clark Regional Park', 'Bellis Park', 'Los Coyotes']
 
 export const SERVICES = [
   {
     id: 'basic',
     name: 'Basic Detail',
     price: 150,
+    duration: '2–3 hours',
     group: 'interior',
     blurb: 'A focused interior reset for cars that need a solid clean.',
     features: [
@@ -43,6 +50,7 @@ export const SERVICES = [
     id: 'premium',
     name: 'Premium Detail',
     price: 200,
+    duration: '4–6 hours',
     group: 'interior',
     blurb: 'Everything in the deep clean, plus shampooing and UV protection.',
     features: [
@@ -79,37 +87,31 @@ export const COUPONS = {
   PREPAY: { amount: 15, label: 'Prepay discount' },
 }
 
-// Appointment start times: 7:00 AM to 7:00 PM, every 30 minutes, every day.
-export const SLOT_START_MIN = 7 * 60
-export const SLOT_END_MIN = 19 * 60
+// Appointment start times: 8:00 AM to 5:00 PM, every 30 minutes, every day.
+// Must match worker/worker.js.
+export const SLOT_START_MIN = 8 * 60
+export const SLOT_END_MIN = 17 * 60
 export const SLOT_STEP_MIN = 30
 // Bookings need at least this much notice, measured on California time (4 hours).
 export const LEAD_MINUTES = 240
 // How far ahead customers can book.
 export const BOOKING_WINDOW_DAYS = 90
 
-// Add real customer reviews here. The section stays hidden while this is empty.
+// Real Google reviews only, as { name: 'First L.', text: '...' } (first name + last initial,
+// typos fixed; leave out reviews that read like a shop visit). The section and its menu
+// link stay hidden while this is empty.
 export const REVIEWS = []
 
+// Home page FAQ. Shown on the page and used for the FAQPage schema, so keep both in sync.
 export const FAQ = [
-  {
-    q: 'What is the difference between the Basic and Premium Detail?',
-    a: 'The Basic Detail is a deep vacuum, a full surface wipe-down and floor mat restoration. The Premium Detail includes all of that cleaning and adds cabin application, dust elimination, interior window cleaning, deep carpet cleaning and extraction, full interior shampooing and a UV-protectant coating.',
-  },
-  {
-    q: 'Can I book just the exterior wash?',
-    a: 'The Exterior Wash is $50 and is added on the screen right after you pick a Basic or Premium Detail. If you only need the exterior, call us at (714) 559-3882 and we will set it up.',
-  },
-  {
-    q: 'Do I have to pay online?',
-    a: 'No. You can pay by card, Apple Pay or Google Pay at checkout, or choose to pay later. Paying online at checkout takes $15 off with code PREPAY.',
-  },
-  {
-    q: 'Where do you work?',
-    a: 'We come to you. Enter your address when you book and we will arrive at your appointment time. We cover Buena Park and nearby Orange County cities.',
-  },
-  {
-    q: 'How do I change or cancel an appointment?',
-    a: 'Call (714) 559-3882 and give us your booking ID from the confirmation page.',
-  },
+  { q: 'Do you come to me?', a: 'Yes. Blacktop is mobile only. We detail your car at your home or workplace in Buena Park and nearby cities.' },
+  { q: 'Do you need my water or power?', a: 'No. We bring our own water and power, so there is nothing for you to set up.' },
+  { q: 'What is the difference between the Basic and Premium Detail?', a: 'The Basic Detail ($150) is a triple-stage vacuum, a full interior wipe-down and floor mat restoration. The Premium Detail ($200) adds cabin application, dust elimination, interior windows, deep carpet cleaning and extraction, full interior shampooing and a UV-protectant coating.' },
+  { q: 'Does an SUV or truck cost more?', a: 'No. Cars, SUVs, trucks and minivans all pay the same price.' },
+  { q: 'How long does a detail take?', a: 'A Basic Detail usually takes 2 to 3 hours and a Premium Detail 4 to 6 hours, depending on the condition of the car.' },
+  { q: 'Can I book just the exterior wash?', a: 'No. The Exterior Wash is a $50 add-on to the Basic or Premium Detail. You can add it on the screen right after you pick your detail.' },
+  { q: 'Which days and times can I book?', a: 'Every day of the week, with start times from 8 AM to 5 PM.' },
+  { q: 'Do I have to pay online?', a: 'No. Pay by card, Apple Pay or Google Pay at checkout and take $15 off with code PREPAY, or choose to pay later.' },
+  { q: 'What if I am not happy with the result?', a: 'Tell us. Every detail is backed by our satisfaction guarantee, and we will make it right.' },
+  { q: 'How do I change or cancel an appointment?', a: 'Call (714) 559-3882 and give us your booking ID from the confirmation page.' },
 ]

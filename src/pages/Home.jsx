@@ -1,40 +1,22 @@
 import { Link } from 'react-router-dom'
-import { Truck, Droplets, CalendarCheck, CreditCard, Check, MapPin, Phone, ChevronDown } from 'lucide-react'
+import { Truck, Droplets, CalendarCheck, CreditCard, MapPin, Phone } from 'lucide-react'
 import BeforeAfter from '../components/BeforeAfter.jsx'
-import { BUSINESS, SERVICES, SERVICE_AREA, FAQ, REVIEWS } from '../config/business'
-
-const basic = SERVICES.find((s) => s.id === 'basic')
-const premium = SERVICES.find((s) => s.id === 'premium')
-const exterior = SERVICES.find((s) => s.id === 'exterior')
+import { Services, Reviews, Faq, FinalCta, AreaChips } from '../components/Sections.jsx'
+import { BUSINESS, HOME_AREAS } from '../config/business'
 
 const FACTS = [
-  { icon: Truck, title: 'We come to you', text: 'Mobile service at your address.' },
-  { icon: Droplets, title: 'Hand washed, hand dried', text: 'Spot-free finish on every exterior wash.' },
-  { icon: CalendarCheck, title: 'Book in minutes', text: 'Open times every 30 minutes, 7 AM to 7 PM.' },
+  { icon: Truck, title: 'We come to you', text: 'We bring our own water and power.' },
+  { icon: Droplets, title: 'Same price, any vehicle', text: 'Cars, SUVs, trucks and minivans.' },
+  { icon: CalendarCheck, title: 'Every day, 8 AM – 5 PM', text: 'Start times every 30 minutes.' },
   { icon: CreditCard, title: 'Pay now or later', text: 'Prepay online and take $15 off.' },
 ]
 
 const STEPS = [
   { title: 'Pick your detail', text: 'Choose Basic or Premium, and add the exterior wash if the outside needs it too.' },
-  { title: 'Choose a time', text: 'Open appointments run every 30 minutes, seven days a week.' },
+  { title: 'Choose a time', text: 'Start times run every 30 minutes from 8 AM to 5 PM, seven days a week.' },
   { title: 'Tell us where', text: 'Enter your vehicle and the address where we should meet you.' },
   { title: 'Pay now or later', text: 'Prepay with card, Apple Pay or Google Pay and save $15, or pay after the detail.' },
 ]
-
-function CheckList({ items, light = false }) {
-  return (
-    <ul className={`checks ${light ? 'checks-light' : ''}`}>
-      {items.map((f) => (
-        <li key={f}>
-          <span className="checks-dot" aria-hidden="true">
-            <Check size={14} strokeWidth={3.5} />
-          </span>
-          {f}
-        </li>
-      ))}
-    </ul>
-  )
-}
 
 function Hero() {
   return (
@@ -54,14 +36,14 @@ function Hero() {
 
       <div className="hero-inner wrap">
         <div className="hero-copy">
-          <p className="hero-place">
+          <h1 className="hero-place">
             <MapPin size={16} aria-hidden="true" />
-            Mobile detailing in {BUSINESS.city}, {BUSINESS.state}
-          </p>
-          <h1 className="chrome-text">A deep black shine, delivered to your driveway</h1>
+            Mobile car detailing in {BUSINESS.city}, {BUSINESS.state}
+          </h1>
+          <p className="chrome-text hero-title">A deep black shine, delivered to your driveway</p>
           <p className="hero-lede">
-            Hand-washed exteriors and deep-cleaned interiors, done at your address. Pick a service, choose a time and
-            book online in a few minutes.
+            Deep-cleaned interiors, plus an optional hand-washed exterior, done at your address with our own water and
+            power. Pick a service, choose a time and book online in a few minutes.
           </p>
           <div className="hero-cta">
             <Link to="/book" className="btn btn-orange btn-lg">
@@ -98,57 +80,6 @@ function Hero() {
           </li>
         ))}
       </ul>
-    </section>
-  )
-}
-
-function Services() {
-  return (
-    <section className="sec sec-light" id="services">
-      <div className="wrap">
-        <div className="sec-head">
-          <h2>Services and pricing</h2>
-          <p>
-            Choose a Basic or Premium interior detail, then add an exterior wash if the outside needs attention too.
-          </p>
-        </div>
-
-        <div className="svc-grid">
-          <article className="svc-card">
-            <header>
-              <h3>{basic.name}</h3>
-              <p className="svc-price">${basic.price}</p>
-            </header>
-            <p className="svc-blurb">{basic.blurb}</p>
-            <CheckList items={basic.features} light />
-            <p className="svc-upsell">Want more? Premium adds shampooing, extraction and UV protection.</p>
-          </article>
-
-          <article className="svc-card svc-card-dark">
-            <header>
-              <h3>{premium.name}</h3>
-              <p className="svc-price">${premium.price}</p>
-            </header>
-            <p className="svc-blurb">{premium.blurb}</p>
-            <CheckList items={premium.features} />
-          </article>
-        </div>
-
-        <article className="svc-wide">
-          <div className="svc-wide-head">
-            <h3>{exterior.name}</h3>
-            <p className="svc-price">+${exterior.price}</p>
-            <p className="svc-blurb">{exterior.blurb}</p>
-          </div>
-          <CheckList items={exterior.features} light />
-        </article>
-
-        <div className="svc-cta">
-          <Link to="/book" className="btn btn-orange btn-lg">
-            Book now
-          </Link>
-        </div>
-      </div>
     </section>
   )
 }
@@ -220,89 +151,16 @@ function Area() {
         <div className="area-copy">
           <h2>We come to you across {BUSINESS.city} and nearby</h2>
           <p>
-            Blacktop is based in {BUSINESS.city}, {BUSINESS.state}. Enter your address when you book and we will meet you
-            there.
+            Blacktop is based in {BUSINESS.city}, {BUSINESS.state}. We detail cars all over town, from{' '}
+            {HOME_AREAS.slice(0, 3).join(', ')} to {HOME_AREAS[3]}, and in these nearby cities at the same prices:
           </p>
-          <ul className="chips">
-            {SERVICE_AREA.map((c) => (
-              <li key={c}>{c}</li>
-            ))}
-          </ul>
+          <AreaChips dark />
           <p className="area-note">
             Not sure we cover your neighborhood? Call <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.
           </p>
         </div>
         <div className="area-map">
           <iframe title={`Map of ${BUSINESS.city}, ${BUSINESS.state}`} src={src} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Reviews() {
-  if (!REVIEWS.length) return null
-  return (
-    <section className="sec sec-black" id="reviews">
-      <div className="wrap">
-        <div className="sec-head sec-head-dark">
-          <h2>What customers say</h2>
-        </div>
-        <div className="rev-grid">
-          {REVIEWS.map((r) => (
-            <blockquote key={r.name} className="rev">
-              <p>{r.text}</p>
-              <footer>{r.name}</footer>
-            </blockquote>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Faq() {
-  return (
-    <section className="sec sec-light" id="faq">
-      <div className="wrap faq">
-        <div className="faq-side">
-          <h2>Questions, answered</h2>
-          <p>Still curious? Call us and we will walk you through it.</p>
-          <a href={BUSINESS.phoneHref} className="btn btn-black">
-            <Phone size={18} aria-hidden="true" />
-            {BUSINESS.phone}
-          </a>
-        </div>
-        <div className="faq-list">
-          {FAQ.map((f) => (
-            <details key={f.q}>
-              <summary>
-                {f.q}
-                <ChevronDown size={22} aria-hidden="true" />
-              </summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function FinalCta() {
-  return (
-    <section className="cta">
-      <div className="wrap cta-inner">
-        <h2>Ready for a cleaner car?</h2>
-        <p>Pick a service and a time. We handle the rest at your address.</p>
-        <div className="cta-buttons">
-          <Link to="/book" className="btn btn-black btn-lg">
-            Book Online
-          </Link>
-          <a href={BUSINESS.phoneHref} className="btn btn-outline-black btn-lg">
-            <Phone size={18} aria-hidden="true" />
-            {BUSINESS.phone}
-          </a>
         </div>
       </div>
     </section>

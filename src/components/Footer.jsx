@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Phone, MapPin, Clock } from 'lucide-react'
-import { BUSINESS } from '../config/business'
+import { BUSINESS, REVIEWS } from '../config/business'
+import { SERVICE_PAGES, CITY_PAGES, HOME_CITY } from '../lib/pages'
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
       <div className="foot-main wrap">
         <div className="foot-brand">
           <img src="/images/logo.png" alt={BUSINESS.name} width="220" height="87" loading="lazy" />
-          <p>Mobile car detailing that comes to your driveway.</p>
+          <p>Mobile car detailing based in {BUSINESS.city}, CA. We bring our own water and power to your driveway.</p>
         </div>
 
         <ul className="foot-contact">
@@ -32,8 +33,28 @@ export default function Footer() {
           <Link to="/#services">Services</Link>
           <Link to="/#work">Our work</Link>
           <Link to="/#how-it-works">How it works</Link>
+          {REVIEWS.length > 0 && <Link to="/#reviews">Reviews</Link>}
           <Link to="/#faq">FAQ</Link>
           <Link to="/book">Book Online</Link>
+        </nav>
+
+        <nav className="foot-links" aria-label="Services">
+          <p className="foot-head">Services</p>
+          {SERVICE_PAGES.map((p) => (
+            <Link key={p.path} to={p.path}>
+              {p.nav}
+            </Link>
+          ))}
+        </nav>
+
+        <nav className="foot-links" aria-label="Areas">
+          <p className="foot-head">Areas</p>
+          <Link to="/">{HOME_CITY}</Link>
+          {CITY_PAGES.map((p) => (
+            <Link key={p.path} to={p.path}>
+              {p.city}
+            </Link>
+          ))}
         </nav>
       </div>
 
