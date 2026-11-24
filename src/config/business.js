@@ -22,6 +22,10 @@ export const BUSINESS = {
   phone: '(714) 559-3882',
   phoneHref: 'tel:+17145593882',
   phoneSchema: '+1-714-559-3882',
+  // Same address as the Google Business Profile (owner asked to match it). Mobile only:
+  // customers are not invited to visit; we go to them.
+  street: '7000 La Palma Ave',
+  zip: '90620',
   city: 'Buena Park',
   state: 'CA',
   hours: 'Every day, 8 AM – 5 PM',

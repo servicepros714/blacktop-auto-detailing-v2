@@ -20,7 +20,7 @@ export default function Footer() {
           <li>
             <MapPin size={18} aria-hidden="true" />
             <span>
-              {BUSINESS.city}, {BUSINESS.state}
+              {BUSINESS.street}, {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
             </span>
           </li>
           <li>
